@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benitha Sri P</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FDFAF6;
+    --bg2: #F7F2EA;
+    --ink: #1C1917;
+    --mid: #6B6457;
+    --soft: #B5AA9A;
+    --terracotta: #C4622D;
+    --terracotta-light: #E8855A;
+    --sage: #7A9E7E;
+    --warm-line: rgba(196,98,45,0.15);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #2A2623;   /* brighter + richer than muted tone */
+    line-height: 1.9;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 22px 72px;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(253,250,246,0.94);
+    backdrop-filter: blur(18px);
+    box-shadow: 0 1px 0 var(--warm-line);
+  }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.76rem;
+    font-weight: 400;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--terracotta); }
+  .nav-resume {
+    padding: 9px 22px;
+    background: var(--terracotta) !important;
+    color: white !important;
+    border-radius: 2px;
+    transition: background 0.25s !important;
+  }
+  .nav-resume:hover { background: var(--terracotta-light) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 0 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-orb1 {
+    position: absolute; right: -80px; top: 50%;
+    transform: translateY(-50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 38%, #F5D4BC 0%, #E8A07C 40%, #C4622D 100%);
+    opacity: 0.17; pointer-events: none;
+  }
+  .hero-orb2 {
+    position: absolute; right: 140px; top: 40%;
+    width: 340px; height: 340px; border-radius: 50%;
+    background: radial-gradient(circle, #7A9E7E 0%, transparent 70%);
+    opacity: 0.13; pointer-events: none;
+  }
+  .hero-left { position: relative; z-index: 2; }
+  .hero-tag {
+    font-size: 0.72rem; font-weight: 400;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 22px;
+    opacity: 0; animation: up 0.8s 0.1s forwards;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.6rem, 6vw, 6.4rem);
+    font-weight: 400; line-height: 1.05; letter-spacing: -0.02em;
+    opacity: 0; animation: up 0.9s 0.25s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--terracotta); }
+  .hero-sub {
+    font-size: 1.05rem; color: var(--mid); font-weight: 300;
+    line-height: 1.75; margin-top: 24px; margin-bottom: 44px; max-width: 460px;
+    opacity: 0; animation: up 0.9s 0.4s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 14px; align-items: center;
+    opacity: 0; animation: up 0.9s 0.55s forwards;
+  }
+  .btn-fill {
+    padding: 13px 34px; background: var(--ink); color: var(--bg);
+    font-family: 'Jost', sans-serif; font-size: 0.76rem; font-weight: 400;
+    letter-spacing: 0.13em; text-transform: uppercase; text-decoration: none;
+    border-radius: 2px; transition: background 0.3s, transform 0.2s ease;
+  }
+  .btn-fill:hover { 
+     background: var(--terracotta);
+      transform: translateY(-2px);
+  }
+  .btn-outline {
+    padding: 13px 34px; border: 1px solid var(--soft); color: var(--mid);
+    font-family: 'Jost', sans-serif; font-size: 0.76rem; font-weight: 400;
+    letter-spacing: 0.13em; text-transform: uppercase; text-decoration: none;
+    border-radius: 2px; transition: border-color 0.3s, color 0.3s, transform 0.2s ease;
+  }
+  .btn-outline:hover { 
+     border-color: var(--ink);
+    color: var(--ink);
+    transform: translateY(-2px);
+  }
+
+  .fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+  /* Hero right card */
+  .hero-right {
+    position: relative; z-index: 2;
+    opacity: 0; animation: fadeIn 1s 0.8s forwards;
+  }
+  .hero-card {
+    background: white;
+    border: 1px solid #EDE8E0;
+    border-radius: 8px;
+    padding: 48px 44px;
+    box-shadow: 0 24px 80px rgba(28,25,23,0.07);
+  }
+  .hero-card-intro {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.12rem; font-style: italic;
+    color: var(--ink); line-height: 1.65;
+    margin-bottom: 36px; padding-bottom: 36px;
+    border-bottom: 1px solid #EDE8E0;
+  }
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+  }
+  .hero-stat {
+    text-align: center; padding: 0 16px;
+    border-right: 1px solid #EDE8E0;
+  }
+  .hero-stat:last-child { border-right: none; }
+  .hero-stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem; font-weight: 400; color: var(--terracotta);
+    display: block; line-height: 1; margin-bottom: 6px;
+  }
+  .hero-stat-label {
+    font-size: 0.68rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--soft);
+  }
+
+  /* SECTIONS */
+  .section { padding: 108px 72px; }
+  .section-alt { background: var(--bg2); }
+  .label {
+    font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 14px;
+  }
+  .heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.2vw, 2.9rem);
+    font-weight: 400; line-height: 1.2; letter-spacing: -0.01em;
+  }
+  .heading em { font-style: italic; }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid; grid-template-columns: 1.1fr 0.9fr;
+    gap: 90px; align-items: start; margin-top: 56px;
+  }
+  .about-text { 
+      font-size: 1.15rem;
+      line-height: 1.9;
+      color: #3A342E; 
+  }
+  .about-text strong { color: var(--ink); font-weight: 500; }
+  .about-contact {
+    margin-top: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #efe9dfd7;
+    padding: 22px 24px;
+    border-radius: 8px;
+    border: 1px solid #E2D9CC;
+  }
+  .about-contact a {
+    color: var(--mid); 
+    text-decoration: none; 
+    font-size: 1.0rem;
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    transition: color 0.25s;
+  }
+  .about-contact a:hover {
+     color: var(--terracotta);
+     cursor: pointer;
+     }
+  .dot { width: 5px; 
+    height: 5px; 
+    border-radius: 50%;
+    background: var(--terracotta); 
+    flex-shrink: 0; 
+    }
+  .skill-group { margin-bottom: 30px; }
+  .skill-group:last-child { margin-bottom: 0; }
+  .skill-group-name {
+    font-size: 0.68rem; 
+    font-weight: 500; 
+    letter-spacing: 0.2em;
+    text-transform: uppercase; 
+    color: var(--soft); 
+    margin-bottom: 12px;
+  }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    padding: 6px 16px; background: white;
+    border: 1px solid #E8E2D8; border-radius: 100px;
+    font-size: 0.82rem; color: var(--ink);
+    transition: border-color 0.25s, background 0.25s;
+  }
+  .pill:hover { border-color: var(--terracotta); background: #FDF0EA; }
+
+  /* WORK */
+  .work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 56px;
+  }
+  .work-box {
+    background: white;
+    padding: 52px 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 360px;
+    transition: background 0.3s, transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .work-box:hover { 
+    background: #FDF6EF;
+    transform: translateY(-8px);
+    box-shadow: 0 20px 50px rgba(28,25,23,0.08);
+    cursor: pointer;
+   }
+  .work-box-top {}
+  .work-period {
+    font-size: 0.72rem; font-weight: 400;
+    letter-spacing: 0.14em; color: var(--soft);
+    text-transform: uppercase; margin-bottom: 20px;
+    display: block;
+  }
+  .work-company {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-style: italic; color: var(--ink);
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .work-location {
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    color: var(--soft); text-transform: uppercase; margin-bottom: 24px; display: block;
+  }
+  .work-role {
+    font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--terracotta); margin-bottom: 18px;
+  }
+  .work-desc {
+     font-size: 1.05rem;
+      line-height: 1.9;
+      color: #3A342E;;
+  }
+  .work-box-bottom { margin-top: 32px; }
+  .work-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    padding: 4px 14px; background: var(--bg2);
+    border-radius: 100px; font-size: 0.74rem;
+    color: var(--mid); border: 1px solid #E8E2D8;
+  }
+  .section-alt .tag { background: var(--bg2); }
+
+  /* PROJECT */
+  .project-single {
+    margin-top: 64px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    padding: 80px 0;
+    border-top: 1px solid #EDE8E0;
+    border-bottom: 1px solid #EDE8E0;
+    transition: transform 0.4s ease;
+  }
+  .project-single:hover {
+  transform: translateY(-6px);
+}
+  .project-visual {
+    aspect-ratio: 4/3; border-radius: 8px;
+    background: linear-gradient(135deg, #F2C4A8 0%, #E8855A 50%, #C4622D 100%);
+    display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;
+  }
+  .project-visual::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0.08), transparent);
+  }
+  .project-visual-text {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 6rem; color: rgba(255,255,255,0.25); user-select: none;
+  }
+  .project-num {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 3.8rem; color: #EDE8E0; line-height: 1; margin-bottom: 14px;
+  }
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem; font-weight: 400; line-height: 1.25; margin-bottom: 18px;
+  }
+  .project-desc { 
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: #3A342E;
+    margin-bottom: 14px;
+   }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+  .project-stack span {
+    padding: 4px 14px; background: var(--bg2);
+    border: 1px solid #E8E2D8; border-radius: 100px;
+    font-size: 0.74rem; color: var(--mid);
+  }
+  .project-link {
+    font-size: 0.76rem; font-weight: 500; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--terracotta); text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px; transition: gap 0.25s;
+  }
+  .project-link:hover { gap: 14px; }
+
+  /* CONTACT */
+  #contact {
+    background: var(--ink); padding: 140px 72px;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  #contact::before {
+    content: ''; position: absolute; top: -200px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(196,98,45,0.22) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .contact-inner { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .contact-label {
+    font-size: 0.7rem; letter-spacing: 0.26em; text-transform: uppercase;
+    color: var(--terracotta); margin-bottom: 22px;
+  }
+  .contact-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 5vw, 4.8rem); font-weight: 400;
+    color: var(--bg); line-height: 1.1; margin-bottom: 22px;
+  }
+  .contact-heading em { font-style: italic; color: var(--terracotta-light); }
+  .contact-sub {
+    font-size: 1rem; color: rgba(253,250,246,0.48);
+    line-height: 1.75; margin-bottom: 48px;
+  }
+  .contact-btns { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+  .btn-light {
+    padding: 13px 38px; background: var(--bg); color: var(--ink);
+    font-family: 'Jost', sans-serif; font-size: 0.76rem; font-weight: 500;
+    letter-spacing: 0.13em; text-transform: uppercase; text-decoration: none;
+    border-radius: 2px; transition: background 0.3s, color 0.3s;
+  }
+  .btn-light:hover { background: var(--terracotta); color: white; }
+  .btn-ghost-light {
+    padding: 13px 38px; border: 1px solid rgba(253,250,246,0.25);
+    color: rgba(253,250,246,0.65); font-family: 'Jost', sans-serif;
+    font-size: 0.76rem; font-weight: 400; letter-spacing: 0.13em;
+    text-transform: uppercase; text-decoration: none; border-radius: 2px;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .btn-ghost-light:hover { border-color: var(--bg); color: var(--bg); }
+
+  /* FOOTER */
+  footer {
+    padding: 28px 72px; background: #141210;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy { font-size: 0.74rem; color: rgba(253,250,246,0.28); letter-spacing: 0.1em; }
+  .footer-links { display: flex; gap: 28px; }
+  .footer-links a {
+    font-size: 0.74rem; color: rgba(253,250,246,0.28);
+    text-decoration: none; transition: color 0.25s;
+  }
+  .footer-links a:hover { color: var(--terracotta); }
+
+  /* ANIMATIONS */
+  @keyframes up {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(26px);
+    transition: opacity 0.75s cubic-bezier(.23,1,.32,1), transform 0.75s cubic-bezier(.23,1,.32,1);
+  }
+  .reveal.on { opacity: 1; transform: none; }
+  .d1 { transition-delay: 0.1s; }
+  .d2 { transition-delay: 0.2s; }
+  .d3 { transition-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links li:not(:last-child) { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; min-height: auto; gap: 48px; }
+    .hero-right { display: none; }
+    .section { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .work-grid { grid-template-columns: 1fr; }
+    .project-single { grid-template-columns: 1fr; gap: 36px; padding: 48px 0; }
+    #contact { padding: 100px 24px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-name">Benitha Sri P.</a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="BenithaSri_Resume.pdf" download class="nav-resume">Resume ↓</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="hero-left">
+    <p class="hero-tag">Full-Stack Developer · Atlanta, GA</p>
+    <h1 class="hero-title">Hi, I'm<br><em>Benitha.</em></h1>
+    <p class="hero-sub">
+      I build web applications that are fast, clean, and actually pleasant to use — mostly Angular, React, and .NET on Azure.
+    </p>
+    <div class="hero-actions">
+      <a href="#work" class="btn-fill">See My Work</a>
+      <a href="mailto:benithap23@gmail.com" target="_blank" rel="noopener" class="btn-outline">Say Hello</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <p class="hero-card-intro">"I like building things that work well — from the database up to the pixels on screen."</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-val">5+</span>
+          <span class="hero-stat-label">Years</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">4</span>
+          <span class="hero-stat-label">Companies</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-val">M.S.</span>
+          <span class="hero-stat-label">CS Degree</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section" id="about">
+  <p class="label reveal">About Me</p>
+  <h2 class="heading reveal d1">A developer who cares<br>about the <em>whole picture.</em></h2>
+  <div class="about-grid">
+    <div class="reveal d1">
+      <p class="about-text">
+        I got into software because I liked solving problems, and that hasn't changed. Over the years I've worked across the full stack — building UIs people enjoy using, APIs that hold up under pressure, and pipelines that just run.
+        <br><br>
+        Outside pure coding, I've gotten into <strong>data engineering and AI</strong> — it started with coursework in machine learning and generative AI at Northwest Missouri State, and turned into real projects I'm genuinely proud of.
+        <br><br>
+        I'm currently in Atlanta and open to new roles and interesting conversations.
+      </p>
+      <div class="about-contact">
+        <a href="mailto:benithap23@gmail.com" target="_blank" rel="noopener"><span class="dot"></span>benithap23@gmail.com</a>
+        <a href="tel:4707852421"><span class="dot"></span>470-785-2421</a>
+        <a href="https://linkedin.com" target="_blank"><span class="dot"></span>LinkedIn</a>
+      </div>
+    </div>
+    <div class="reveal d2">
+      <div class="skill-group">
+        <p class="skill-group-name">Frontend</p>
+        <div class="skill-pills">
+          <span class="pill">Angular</span>
+          <span class="pill">React</span>
+          <span class="pill">TypeScript</span>
+          <span class="pill">HTML / CSS</span>
+          <span class="pill">Bootstrap</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-name">Backend & Cloud</p>
+        <div class="skill-pills">
+          <span class="pill">.NET / C#</span>
+          <span class="pill">REST APIs</span>
+          <span class="pill">Azure</span>
+          <span class="pill">CI/CD</span>
+          <span class="pill">SQL Server</span>
+          <span class="pill">PowerShell</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-name">Data & AI</p>
+        <div class="skill-pills">
+          <span class="pill">Python</span>
+          <span class="pill">TensorFlow</span>
+          <span class="pill">ETL / Pentaho</span>
+          <span class="pill">NLP</span>
+          <span class="pill">EasyOCR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WORK -->
+<div class="section section-alt" id="work">
+  <p class="label reveal">Experience</p>
+  <h2 class="heading reveal d1">Where I've <em>worked.</em></h2>
+
+  <div class="work-grid">
+
+    <div class="work-box reveal">
+      <div class="work-box-top">
+        <span class="work-period">Oct 2025 — Present</span>
+        <p class="work-company">Vlaunch Solutions</p>
+        <span class="work-location">USA</span>
+        <p class="work-role">Azure Full-Stack Developer</p>
+        <p class="work-desc">Working across the whole stack — Angular on the front, .NET on the back, Azure holding it all together. Good mix of product work and infrastructure, including ETL pipelines for a healthcare client and a Python NLP chatbot built from scratch.</p>
+      </div>
+      <div class="work-box-bottom">
+        <div class="work-tags">
+          <span class="tag">Angular 18</span><span class="tag">.NET 8</span><span class="tag">Azure</span><span class="tag">GitHub Actions</span><span class="tag">Pentaho</span><span class="tag">Python</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-box reveal d1">
+      <div class="work-box-top">
+        <span class="work-period">Jul — Oct 2025</span>
+        <p class="work-company">One Community Global</p>
+        <span class="work-location">USA · Open Source</span>
+        <p class="work-role">Software Engineer</p>
+        <p class="work-desc">Built volunteer scheduling features in React, fixed a long backlog of cross-browser bugs, and tightened TypeScript types across the codebase — the kind of work that quietly makes everything more stable.</p>
+      </div>
+      <div class="work-box-bottom">
+        <div class="work-tags">
+          <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">Bootstrap</span><span class="tag">Jest</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-box reveal d2">
+      <div class="work-box-top">
+        <span class="work-period">Jan 2022 — Dec 2023</span>
+        <p class="work-company">Capgemini</p>
+        <span class="work-location">India</span>
+        <p class="work-role">Software Engineer</p>
+        <p class="work-desc">Agile sprints on a job platform — dashboards, applicant tracking, listings. Fixed stale data issues in React that had been bothering the team, and cut an audit SQL query from 8s to 3s. Also handled Azure deployments and security hardening.</p>
+      </div>
+      <div class="work-box-bottom">
+        <div class="work-tags">
+          <span class="tag">React</span><span class="tag">SQL Server</span><span class="tag">Azure App Services</span><span class="tag">Agile</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="work-box reveal d3">
+      <div class="work-box-top">
+        <span class="work-period">Aug 2020 — Dec 2021</span>
+        <p class="work-company">McRaan Systems</p>
+        <span class="work-location">India</span>
+        <p class="work-role">Software Engineer</p>
+        <p class="work-desc">My first job. I spent a lot of time turning Figma mockups into React components, wiring up REST APIs, and learning why TypeScript actually matters. Good foundation for everything that came after.</p>
+      </div>
+      <div class="work-box-bottom">
+        <div class="work-tags">
+          <span class="tag">React.js</span><span class="tag">TypeScript</span><span class="tag">REST APIs</span><span class="tag">Figma</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PROJECT -->
+<div class="section" id="projects">
+  <p class="label reveal">Projects</p>
+  <h2 class="heading reveal d1">Things I've <em>built.</em></h2>
+
+  <div class="project-single reveal d1">
+    <div class="project-visual">
+      <span class="project-visual-text">AI</span>
+    </div>
+    <div class="project-info">
+      <p class="project-num">01</p>
+      <h3 class="project-title">RAISE — Real-time Speaker Intelligence</h3>
+      <p class="project-desc">
+        My grad school capstone. A live conversational AI that tracks multiple speakers and reads the emotional tone of a conversation as it unfolds.
+      </p>
+      <p class="project-desc">
+        I wanted to explore whether AI could genuinely help people communicate better in real time. Built with Python and Streamlit, using LLM frameworks for language understanding. The most fun I had in grad school.
+      </p>
+      <div class="project-stack">
+        <span>Python</span><span>Streamlit</span><span>LLM Frameworks</span><span>NLP</span>
+      </div>
+      <a href="#" class="project-link">View on GitHub →</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact">
+  <div class="contact-inner reveal">
+    <p class="contact-label">Let's connect</p>
+    <h2 class="contact-heading">Open to what's<br><em>next.</em></h2>
+    <p class="contact-sub">
+      Whether it's a full-time role, a contract project, or just a good conversation about tech — I'm always up for it.
+    </p>
+    <div class="contact-btns">
+      <a href="BenithaSri_Resume.pdf" download class="btn-ghost-light">Download Resume</a>
+    </div>
+  </div>
+</div>
+
+<section class="about fade-in"></section>
+
+<footer>
+  <span class="footer-copy">© 2025 Benitha Sri P.</span>
+  <div class="footer-links">
+    <a href="mailto:benithap23@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/benithapanchagiri/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/BenithaSri">GitHub</a>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
